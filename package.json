@@ -1,0 +1,24 @@
+{
+  "name": "auth0_template",
+  "version": "1.0.0",
+  "description": "basic node express template",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/app.js"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "autho0",
+    "template"
+  ],
+  "author": "@devjana",
+  "license": "ISC",
+  "dependencies": {
+    "angular-jwt": "^0.1.3",
+    "angular-lock": "^1.0.2",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
+  }
+}
