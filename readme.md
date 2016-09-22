@@ -131,5 +131,36 @@ At the top of auth0.js is the following line:
 var lock = new Auth0Lock( 'CLIENTID', 'DOMAIN');
 ```
 
-Replace CLIENTID with the Client ID from your Auth0 tab in the web browser.
-Replace DOMAIN with the domain from the same page (should look like YOURNAME.auth0.com)
+* Replace CLIENTID with the Client ID from your Auth0 tab in the web browser.
+* Replace DOMAIN with the domain from the same page (should look like YOURNAME.auth0.com)
+
+Time to test!
+-------------
+* take a deep breath
+* cross your fingers
+* spin up your server
+* open your page in a new tab
+* click the "Log In" button
+
+If things are set up correctly you should see the Auth0 popup login box
+
+![step 13](images/13-signUp.png)
+
+Choose "Sign Up" and click the Google logo. You should be taken to a page that shows the name of your app and the access to the user's google account that was set in your Google setup phase earlier.
+
+![step 14](images/14-permissions.png)
+
+Once you accept you should be logged in. In this example we're really just logging out the token for this user's logged in session as well as the user object.
+
+![step 15](images/15-loggedIn.png)
+
+Next steps
+----------
+* return the object from the logIn function in auth0.js to return the user object.
+* Show a "welcome back, USER" message instead of the "Log In" button now that the user has logged in
+* Research and implement a different social log in, facebook perhaps?
+* in Chrome's DevTools, checkout the Application tab and the "localstorage" section. This can be accessed in js. (try 'localStorage.userProfile' in the console and in a js file) What can you do with this object?
+* add "log out" functionality
+* discuss with your cohortmates how this functionality could be used for solo projects, group projects, or added to existing projects
+
+https://www.youtube.com/watch?v=Q7_jbluF0qo
