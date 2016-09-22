@@ -3,6 +3,18 @@ Auth0 Example
 
 In this example project we'll user Auth0 to allow user to log in to our site via a Google account. This requires some setup with an Auth0 account, a Google developer account, and our page itself.
 
+High level overview
+-------------------
+Below is an example of how we'll be using Auth0 to enable login functionality on our site. It acts as an external server - similar to the API calls we've done in the past. Auth0 will connect our app to third party services so that our users can log in with their other accoutns. In this example we'll be using the user's Google account.
+
+![conceptual stack](images/conceptualStackFull.png)
+
+We'll add a button on the HTML that will run a function on the client. This function will send a login request to Auth0. Then, Auth0 will request authorization from Google. Google will respond as to whether or not the authentication was good to Auth0. Then Auth0 will tell our web app what's up. If the authentication was successful, we'll also receive an object with the user's info.
+
+Account Setup
+=============
+Before we can start working with Auth0 and Google in our app we'll need to set them up. First we'll set up our Google account, then our Auth0 account, then we'll let them know how to talk with each other. At that point we can start using it in our app.
+
 Needed Accounts
 --------------
 First, create an account with Auth0 an a google developer account:
@@ -10,11 +22,12 @@ First, create an account with Auth0 an a google developer account:
 * https://auth0.com/
 * https://console.developers.google.com/
 
-Account Setup
-=============
 
 Initial Google setup
 --------------------
+
+![conceptual stack](images/conceptualStackGoogle.png)
+
 First, we'll need to create a new project:
 
 ![step 0](images/00-google 0.png)
@@ -39,6 +52,8 @@ Save your work and keep this page open in a tab. We'll be coming back to it late
 
 Auth0 setup
 -----------
+![conceptual stack](images/conceptualStackAuth0.png)
+
 First, we'll want to create a "client" on Auth0. This will be what talks to Google to get out authentication working.
 
 ![step 5](images/05-auth0 0.png)
@@ -62,6 +77,8 @@ Keep the Auth0 tab open as well. We'll bounce back/forth between both and our ap
 
 Connecting Auth0 and Google
 ---------------------------
+![conceptual stack](images/conceptualStackAuth0Google.png)
+
 In your Google Tab, we'll need to add the domain from our Auth0 tab in the "Authorized Redirect URIs" field. Not that you may need to add "https://" a the front of the domain.
 
 This tells Google that it is acceptable for this Auth0 domain to make authentication requests.
@@ -81,6 +98,8 @@ These connections should now be set up and we've got to add Auth0's functionalit
 
 Setting up our project
 ======================
+![conceptual stack](images/conceptualStackClient.png)
+
 Start with a basic Node/Express/Angular project. The example project simply spins up a server on port 3030 and serves an index.html file. Also, I've included a scripts folder within which we've got a file named "auth0.js". This has some helper functionality in there that we'll use.
 
 We'll source in that file as well as some setup from Auth0:
