@@ -81,3 +81,55 @@ These connections should now be set up and we've got to add Auth0's functionalit
 
 Setting up our project
 ======================
+Start with a basic Node/Express/Angular project. The example project simply spins up a server on port 3030 and serves an index.html file. Also, I've included a scripts folder within which we've got a file named "auth0.js". This has some helper functionality in there that we'll use.
+
+We'll source in that file as well as some setup from Auth0:
+
+```javascript
+<!-- auth0 setup -->
+<script src="https://cdn.auth0.com/js/lock-8.1.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<script src="vendors/angular.min.js" charset="utf-8"></script>
+<!-- auth0 helper -->
+<script src="scripts/auth0.js" charset="utf-8"></script>
+<script src="scripts/authExample.js" charset="utf-8"></script>
+```
+
+Yes, I know... normally I'd avoid using the CDN for serving a vendor file, but in this case the user will need to be connected to the web to authenticate anyway and we'll need Auth0's servers up to check to it should be fine. The viewport is there for the overlay that we'll see when things are working.
+
+Next, we'll add a button to the page and hook it up to an ng-click that will run the login functionality.
+
+```html
+<body ng-app='myApp'>
+  <h1>Node Express Auth0 Template 9-2016</h1>
+  <button ng-controller='authController' ng-click='logInButton()'>Log In</button>
+</body>
+```
+
+This will, of course, also require an angular module and controller. These are kept as simple as possible here:
+
+```javascript
+console.log( 'js' );
+var myApp=angular.module( 'myApp', [] );
+
+myApp.controller( 'authController', [ '$scope', function( $scope ){
+  console.log( 'authController here!');
+  $scope.logInButton = function(){
+    // call out logIn function from auth0.js
+    logIn();
+  }; // end scope.logIn
+}]); // end authController
+```
+
+This just runs the "$scope.logInButton" function on button click that runs the "logIn" function in auth0.js. For our first tests, this is all we should need in our js file as well as our htm file.
+
+However, we still need to do a little configurating in auth0.js. I hope you haven't closed your browser tabs...
+
+At the top of auth0.js is the following line:
+
+```javascript
+var lock = new Auth0Lock( 'CLIENTID', 'DOMAIN');
+```
+
+Replace CLIENTID with the Client ID from your Auth0 tab in the web browser.
+Replace DOMAIN with the domain from the same page (should look like YOURNAME.auth0.com)
