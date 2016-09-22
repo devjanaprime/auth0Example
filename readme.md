@@ -60,13 +60,13 @@ Note: if you deploy to something like Heroku, you'll need to add the URLs here.
 
 Connecting Auth0 to Google
 --------------------------
-![step 9](images/09-google 5.png)
+![step 9](images/09-google 5a.png)
 
 ![step 10](images/10-auth0 4.png)
 
 ![step 11](images/11-auth0 5.png)
 
-![step 12](images/12-google 6.png)
+![step 12](images/12-google 6a.png)
 
 Setting up our project
 ======================
