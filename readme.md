@@ -58,15 +58,26 @@ Note: if you deploy to something like Heroku, you'll need to add the URLs here.
 
 ![step 8](images/08-auth0 3.png)
 
-Connecting Auth0 to Google
---------------------------
-![step 9](images/09-google 5a.png)
+Keep the Auth0 tab open as well. We'll bounce back/forth between both and our app until we've got all working.
+
+Connecting Auth0 and Google
+---------------------------
+In your Google Tab, we'll need to add the domain from our Auth0 tab in the "Authorized Redirect URIs" field. Not that you may need to add "https://" a the front of the domain.
+
+This tells Google that it is acceptable for this Auth0 domain to make authentication requests.
+
+![step 12](images/12-google 6a.png)
+
+Back in the Auth0 tab, Expand the "Connections" menu item and choose "social". From here you'll be able to choose two social authentication endpoints (in the free version). We'll be using Google so make sure that is turned on.
 
 ![step 10](images/10-auth0 4.png)
 
+Next we need to use the "Client ID" and "Client Secret" from our Google project and tell Auth0 about it. Copy these from the Google tab and paste them into the appropriate fields in the Auth0 tab.
+
 ![step 11](images/11-auth0 5.png)
 
-![step 12](images/12-google 6a.png)
+These connections should now be set up and we've got to add Auth0's functionality to our app.
+
 
 Setting up our project
 ======================
