@@ -100,17 +100,15 @@ Setting up our project
 ======================
 ![conceptual stack](images/conceptualStackClient.png)
 
-Start with a basic Node/Express/Angular project. The example project simply spins up a server on port 3030 and serves an index.html file. Also, I've included a scripts folder within which we've got a file named "auth0.js". This has some helper functionality in there that we'll use.
+Start with a basic Node/Express/Angular project. The example project simply spins up a server on port 3030 and serves an index.html file.
 
-We'll source in that file as well as some setup from Auth0:
+We'll source in some setup from Auth0 followed by angular and our client side script:
 
 ```javascript
 <!-- auth0 setup -->
 <script src="https://cdn.auth0.com/js/lock-8.1.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <script src="vendors/angular.min.js" charset="utf-8"></script>
-<!-- auth0 helper -->
-<script src="scripts/auth0.js" charset="utf-8"></script>
 <script src="scripts/authExample.js" charset="utf-8"></script>
 ```
 
@@ -121,37 +119,52 @@ Next, we'll add a button to the page and hook it up to an ng-click that will run
 ```html
 <body ng-app='myApp'>
   <h1>Node Express Auth0 Template 9-2016</h1>
-  <button ng-controller='authController' ng-click='logInButton()'>Log In</button>
+  <div ng-controller='authController'>
+    Please <button ng-click='logIn()'>Log In</button>
+  <div>
 </body>
 ```
 
-This will, of course, also require an angular module and controller. These are kept as simple as possible here:
+We'll have to put some setup at the top of our js file.
+
+* Replace CLIENTID with the Client ID from your Auth0 tab in the web browser.
+* Replace DOMAIN with the domain from the same page (should look like YOURNAME.auth0.com)
+* For the logOutUrl use the logout URL from your Auto0 client page.
 
 ```javascript
-console.log( 'js' );
+var lock = new Auth0Lock( 'CLIENTID', 'DOMAIN');
+// log out url, from Auth0
+var logOutUrl = 'https://YOURAUTH0SUBDOMAIN.auth0.com/v2/logout';
+```
+
+That button on the HTML will, of course, also require an angular module and controller. These are kept as simple as possible to start:
+
+```javascript
 var myApp=angular.module( 'myApp', [] );
 
-myApp.controller( 'authController', [ '$scope', function( $scope ){
+myApp.controller( 'authController', [ '$scope', '$http', function( $scope, $scope ){
   console.log( 'authController here!');
-  $scope.logInButton = function(){
+  $scope.logIn = function(){
     // call out logIn function from auth0.js
-    logIn();
+    console.log( 'in logIn' );
+    lock.show( function( err, profile, token ) {
+      if (err) {
+        console.error( "auth error: ", err);
+      } // end error
+      else {
+        // save token to localStorage
+        localStorage.setItem( 'userToken', token );
+        console.log( 'token:', token );
+        // save user profile to localStorage
+        localStorage.setItem( 'userProfile', JSON.stringify( profile ) );
+        console.log( 'profile:', profile );
+      } // end no error
+    }); //end lock.show
   }; // end scope.logIn
 }]); // end authController
 ```
 
-This just runs the "$scope.logInButton" function on button click that runs the "logIn" function in auth0.js. For our first tests, this is all we should need in our js file as well as our htm file.
-
-However, we still need to do a little configurating in auth0.js. I hope you haven't closed your browser tabs...
-
-At the top of auth0.js is the following line:
-
-```javascript
-var lock = new Auth0Lock( 'CLIENTID', 'DOMAIN');
-```
-
-* Replace CLIENTID with the Client ID from your Auth0 tab in the web browser.
-* Replace DOMAIN with the domain from the same page (should look like YOURNAME.auth0.com)
+This runs the "$scope.logIn" function on button click. For our first tests, this is all we should need in our js file as well as our HTML file.
 
 Time to test!
 -------------
@@ -173,13 +186,10 @@ Once you accept you should be logged in. In this example we're really just loggi
 
 ![step 15](images/15-loggedIn.png)
 
-Next steps
+Next Steps
 ----------
-* return the object from the logIn function in auth0.js to return the user object.
-* Show a "welcome back, USER" message instead of the "Log In" button now that the user has logged in
-* Research and implement a different social log in, facebook perhaps?
-* in Chrome's DevTools, checkout the Application tab and the "localstorage" section. This can be accessed in js. (try 'localStorage.userProfile' in the console and in a js file) What can you do with this object?
-* add "log out" functionality
-* discuss with your cohortmates how this functionality could be used for solo projects, group projects, or added to existing projects
+If you've made it this far you've got the ability to do some basic log in using Auto0. In pairs, take a look at the rest of the code in a peer programming environment. Reconstruct the code and deconstruct its meaning. I'll be patrolling the space and answering questions.
+
+If you can recreate this project you've got a starting point from which to work with basic authentication.
 
 https://www.youtube.com/watch?v=Q7_jbluF0qo
