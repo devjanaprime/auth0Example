@@ -15,7 +15,10 @@
     <h1>Node Express Auth0 Template 9-2016</h1>
     <div ng-controller='authController'>
       <div ng-show='showUser'>
-        Welcome back, {{ userProfile.name }}! <button ng-click='logOut()'>Log Out</button>
+        <p>
+          Welcome back, {{ userProfile.name }}! <button ng-click='logOut()'>Log Out</button>
+        </p>
+        <img src="{{ userProfile.picture }}" />
       </div>
       <div ng-hide='showUser'>
         Please <button ng-click='logIn()'>Log In</button>
