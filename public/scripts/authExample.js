@@ -66,12 +66,12 @@ myApp.controller( 'authController', [ '$scope', '$http', function( $scope, $http
     $http({
       method: 'GET',
       url: '/protected',
-      header: {
-        "Authorization": "Bearer " + token
-      }
+      headers: {
+       'Authorization': 'Bearer ' + token
+     }
     }).then(function(response) {
       if(response.status == 200) {
-        console.log('Protected Data: ', reponse.data);
+        console.log('Authenticated by the server!');
       } else {
         console.log('Failed');
       }
