@@ -17,11 +17,12 @@
           Welcome back, {{ userProfile.name }}! <button ng-click='logOut()'>Log Out</button>
         </p>
         <img src="{{ userProfile.picture }}" />
-        <p><button ng-click="getProtectedData()">Get Protected Data</button>
+
       </div>
       <div ng-hide='showUser'>
         Please <button ng-click='logIn()'>Log In</button>
       </div>
+      <p><button ng-click="getProtectedData()">Get Protected Data</button>
     </div>
   </body>
 </html>

@@ -62,20 +62,24 @@ myApp.controller( 'authController', [ '$scope', '$http', function( $scope, $http
 
   $scope.getProtectedData = function() {
     var token = localStorage.getItem( 'userToken' );
-    console.log(token);
-    $http({
-      method: 'GET',
-      url: '/protected',
-      headers: {
-       'Authorization': 'Bearer ' + token
-     }
-    }).then(function(response) {
-      if(response.status == 200) {
-        console.log('Authenticated by the server!');
-      } else {
-        console.log('Failed');
-      }
-    });
+    console.log("Token: ", token);
+
+    // only make the request if they are logged in
+    if(token) {
+      $http({
+        method: 'GET',
+        url: '/protected',
+        headers: {
+         'Authorization': 'Bearer ' + token
+       }
+      }).then(function(response) {
+        if(response.status == 200) {
+          console.log('Authenticated by the server!');
+        } else {
+          console.log('Failed');
+        }
+      });
+    }
   }
 
 }]); // end authController

@@ -2,20 +2,15 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res) {
-
-
-  console.log('here');
-  res.sendStatus(200);
-   // bar
-  // function(req, res) {
-  //   if (!req.user.admin) {
-  //     console.log('tokenized user', req.user);
-  //     return res.sendStatus(401);
-  //   } else {
-  //     console.log('ok!');
-  //     res.sendStatus(200);
-  //   }
-  // }
+  // check if this user has a token
+  if(req.jwt_auth) {
+    console.log('logged in');
+    res.sendStatus(200);
+  } else {
+    // no soup for you!
+    console.log("unauthenticated");
+    res.sendStatus(401);
+  }
 });
 
 module.exports = router;

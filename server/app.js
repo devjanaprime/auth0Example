@@ -15,7 +15,6 @@ var JWT = require('jwt-async'),
           jwt = new JWT();
 jwt.setSecret(secret);
 
-
 app.use(bodyParser.json());
 
 // static folder
@@ -26,16 +25,15 @@ app.use(function(req, res, next) {
   req.jwt_auth = false;
 
   if(req.headers['authorization'])  {
-      var jwt_token = req.headers['authorization'].substr(7);
+    var jwt_token = req.headers['authorization'].substr(7);
+    jwt.verify(jwt_token, function(err, jwt_data) {
+        if(err) throw err;
 
-      jwt.verify(jwt_token, function(err, jwt_data) {
-          if(err) throw err;
-
-          req.jwt_auth = jwt_data;
-          next();
-      });
+        req.jwt_auth = jwt_data;
+        next();
+    });
   } else {
-      next();
+    next();
   }
 });
 
