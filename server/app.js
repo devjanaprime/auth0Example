@@ -9,10 +9,10 @@ var locked = require('./routes/protected');
 
 var base64 = require('base-64');
 // FFS. Note that auth0's "base 64 encoding" is not valid base 64. Replace '_' with '/' and '-' with '+'
-var encoded = '1xikoBIysg1ojOemoIyFS03ojEGnWQGXgY1Zwp4xhg0t+t0LCTJixxd+9km9hHqF';
+var encoded = '';
 var secret = base64.decode(encoded);
-var JWT = require('jwt-async'),
-          jwt = new JWT();
+var JWT = require('jwt-async');
+var jwt = new JWT();
 jwt.setSecret(secret);
 
 app.use(bodyParser.json());
