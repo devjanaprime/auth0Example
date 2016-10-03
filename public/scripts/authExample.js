@@ -50,9 +50,9 @@ myApp.controller( 'authController', [ '$scope', '$http', function( $scope, $http
     $http({
       method:'GET',
       url: logOutUrl,
-    }).then( function( data ){
+    }).then( function( response ){
       // if logged out OK
-      if( data.data == 'OK' ){
+      if( response.data == 'OK' ){
         // empty localStorage
         emptyLocalStorage();
         $scope.showUser = false;
@@ -79,6 +79,8 @@ myApp.controller( 'authController', [ '$scope', '$http', function( $scope, $http
           console.log('Failed');
         }
       });
+    } else {
+      console.log("No token present");
     }
   }
 

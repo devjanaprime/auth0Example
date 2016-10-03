@@ -16,7 +16,7 @@
         <p>
           Welcome back, {{ userProfile.name }}! <button ng-click='logOut()'>Log Out</button>
         </p>
-        <img src="{{ userProfile.picture }}" />
+        <img ng-src="{{ userProfile.picture }}" />
 
       </div>
       <div ng-hide='showUser'>
