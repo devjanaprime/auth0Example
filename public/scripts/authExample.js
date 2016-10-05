@@ -1,14 +1,17 @@
-var lock = new Auth0Lock( 'CLIENTID', 'DOMAIN');
-// log out url, from Auth0
-var logOutUrl = 'https://YOURAUTH0SUBDOMAIN.auth0.com/v2/logout';
+// auth0 vars
+var lock = new Auth0Lock( 'Wb5M70U0cQobbJAkRCUnE4GBWStT7G7M', 'kdszafranski.auth0.com');
+var logOutUrl = 'https://kdszafranski.auth0.com/v2/logout';
 
-var myApp=angular.module( 'myApp', [] );
+var myApp = angular.module( 'myApp', [] );
 
 // basic controller
 myApp.controller( 'authController', [ '$scope', '$http', function( $scope, $http ){
 
+  // run init on controller load
+  init();
+
   //run at controller load
-  $scope.init = function(){
+  function init() {
     console.log( 'in init' );
     // check if a user's info is saved in localStorage
     if( JSON.parse( localStorage.getItem( 'userProfile' ) ) ){
@@ -47,9 +50,9 @@ myApp.controller( 'authController', [ '$scope', '$http', function( $scope, $http
     $http({
       method:'GET',
       url: logOutUrl,
-    }).then( function( data ){
+    }).then( function( response ){
       // if logged out OK
-      if( data.data == 'OK' ){
+      if( response.data == 'OK' ){
         // empty localStorage
         emptyLocalStorage();
         $scope.showUser = false;
@@ -57,8 +60,30 @@ myApp.controller( 'authController', [ '$scope', '$http', function( $scope, $http
     })
   }; // end scope.logIn
 
-  // run init on controller load
-  $scope.init();
+  $scope.getProtectedData = function() {
+    var token = localStorage.getItem( 'userToken' );
+    console.log("Token: ", token);
+
+    // only make the request if they are logged in
+    if(token) {
+      $http({
+        method: 'GET',
+        url: '/protected',
+        headers: {
+         'Authorization': 'Bearer ' + token
+       }
+      }).then(function(response) {
+        if(response.status == 200) {
+          console.log('Authenticated by the server!');
+        } else {
+          console.log('Failed');
+        }
+      });
+    } else {
+      console.log("No token present");
+    }
+  }
+
 }]); // end authController
 
 var emptyLocalStorage = function(){
